@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <title>Index</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" 
+        href="{{url_for('static', filename='style.css')}}">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+    <script language="javascript" type="text/javascript">
+        function api_post() {
+            var data = document.getElementById('test').value
+            var request = new XMLHttpRequest();
+            request.open('POST', '/', true);
+            request.responseType = 'json';
+            request.onload = function () {
+                var result = this.response
+                document.getElementById('testResult').innerHTML = result.kekka
+                console.log(result);
+            };
+            request.send(data);
+        }
+    </script>
+
+
+</head>
+
+<body>
+    <h1>{{title}}</h1>
+    <p>{{message}}</p>
+    <div>
+        <input type="text" id="test">
+        <input type="button" value="kekkasousin" onclick="api_post();"/><br />
+        <p id="testResult"></p>
+    </div>
+</body>
+
+
+
+<!-- Vue.js container -->
+{% raw %}
+<div id="app" class="m-5">
+    <h2>{{vue_msg}}</h2>
+    <h2>{{questions}}</h2>
+
+</div>
+{% endraw %}
+
+
+<!-- Vue.js script -->
+<script>
+    var request = new XMLHttpRequest();
+    var result = '';
+    request.open('POST', '/questions', true);
+    request.responseType = 'json';
+    request.onload = function () {
+        result = this.response
+    };
+    request.send();
+
+
+// start Vue.
+new Vue({
+    el:'#app',
+    data: {
+        vue_msg: 'Vue',
+        questions: this.result
+    }
+});
+
+
+
+</script>
+    
+</html>
