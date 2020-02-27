@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request, jsonify
-# import numpy as np
+from flask_cors import CORS
+import numpy as np
 import sqlite3
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.config['JSON_AS_ASCII'] = False
+CORS(app)
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html', \
-        title="gotanno", \
-        message="chart")
+    return render_template('index.html')
 
 
 @app.route('/', methods=['POST'])
@@ -26,7 +26,7 @@ def api_post():
 @app.route('/result', methods=['POST'])
 def result():
     kekka = request.kekka
-    
+
     result =  {
                 "kekka": matching(kekka)
             }
@@ -38,11 +38,11 @@ def result():
 def questions():
     print('kiteru')
     # result = executeQuery('select body, score from questions')
-    result = [
-                {'question':'質問1', 'answers':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] },
-                {'question':'質問2', 'answers':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] },
-                {'question':'質問3', 'answers':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] }
-            ]
+    result =  {
+                '0':{'question':'質問1', 'ans':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] },
+                '1':{'question':'質問2', 'ans':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] },
+                '2':{'question':'質問3', 'ans':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] }
+            }
     return jsonify(result)
 
 
