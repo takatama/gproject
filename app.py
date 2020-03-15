@@ -7,21 +7,37 @@ app = Flask(__name__, static_url_path='/static')
 app.config['JSON_AS_ASCII'] = False
 CORS(app)
 
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
     return render_template("index.html")
 
 
-@app.route('/', methods=['POST'])
+def get_test_questions(n):
+    result = []
+    for i in range(n):
+        result.append({
+            'type': '質問' + str(i + 1) + 'のタイプ',
+            'description': '質問' + str(i + 1) + 'の説明',
+            'questions': ['度合1の説明', '', '', '', '度合5の説明']
+        })
+    return result
 
+
+@app.route('/v1/questions')
+def get_questions():
+    result = get_test_questions(4)
+    return jsonify(result)
+
+
+@app.route('/', methods=['POST'])
 def api_post():
     # data = request.data.decode() + 'flask'
     result =  {
                 "kekka": 'ok'
             }
     return jsonify(result)
-
 
 
 @app.route('/result', methods=['POST'])
@@ -34,7 +50,6 @@ def result():
     return jsonify(result)
 
 
-
 @app.route('/questions', methods=['POST'])
 def questions():
     print('kiteru')
@@ -45,7 +60,6 @@ def questions():
                 '2':{'question':'質問3', 'ans':['はい', 'はい', 'どちらでもない', 'いいえ', 'いいえ'] }
             }
     return jsonify(result)
-
 
 
 # Returns:てんぽid
@@ -61,7 +75,6 @@ def executeQuery(query):
     return result
 
 
-
 def dbtest():
     dbname = 'gotannodb.db'
     conn = sqlite3.connect(dbname)
@@ -73,8 +86,6 @@ def dbtest():
     # print(result)
     # for row in result:
     #     print(row)
-
-
 
 
 if __name__ == '__main__':
