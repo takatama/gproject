@@ -31,6 +31,32 @@ def get_questions():
     return jsonify(result)
 
 
+def validate_answers(answers):
+    pass
+
+
+def get_test_recommendations():
+    result = []
+    result.append({
+        'name': '店舗の名前',
+        'address': '店舗の住所',
+        'tel': '店舗の電話番号',
+        'status': '店舗の営業状況',
+        'open': '店舗の開店時間',
+        'close': '店舗の閉店時間',
+        'imageUrl': 'https://www.example.com/image.png'
+    })
+    return result
+
+
+@app.route('/v1/answers', methods=['POST'])
+def post_answers():
+    answers = request.get_data()
+    validate_answers(answers)
+    result = get_test_recommendations()
+    return jsonify(result)
+
+
 @app.route('/', methods=['POST'])
 def api_post():
     # data = request.data.decode() + 'flask'
