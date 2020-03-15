@@ -1,6 +1,20 @@
 # API
+- 質問のタイプ
+- 質問を取得する GET /v1/questions
+- 回答を登録する POST /v1/answers
 
-## GET /v1/questions
+## 質問のタイプ
+  - price 価格帯
+  - hygiene 清潔度
+  - volume ガッツリ度
+  - waiting_time 提供時間
+  - friendliness 店主の絡み度
+  - distance_from_station 駅からの近さ
+  - space 広さ
+  - age_range 年齢層
+  - stylishness オシャレ度
+
+## 質問を取得する GET /v1/questions
 - 質問を取得する。
 - リクエスト
   - query parameter なし
@@ -22,8 +36,8 @@
 ]
 ```
 
-## POST /v1/answers
-- 質問に回答した結果を登録して、オススメの店舗情報を取得する。
+## 回答を登録する POST /v1/answers
+- 回答を登録して、オススメの店舗情報を取得する。
 - リクエスト
   - query parameter なし
   - body
